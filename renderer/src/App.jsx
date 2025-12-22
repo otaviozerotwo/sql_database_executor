@@ -1,5 +1,5 @@
 import './App.css';
-import { FaDatabase } from 'react-icons/fa';
+import { FaDatabase, FaFileUpload } from 'react-icons/fa';
 import { FaPlug, FaTerminal, FaPlay, FaStop, FaS } from 'react-icons/fa6';
 
 function App() {
@@ -51,6 +51,11 @@ function App() {
 
           <div className="sql-files">
             <h2 className='sql-files-title'>SQL Files</h2>
+            <div className="sql-upload-area">
+              <FaFileUpload size={48} />
+              <p>Drag and drop SQL files here</p>
+              <p>or click to browse</p>
+            </div>
             <button 
               type='submit' 
               className='btn-disabled'
