@@ -68,11 +68,14 @@ function App() {
           </div>
         </aside>
         <main className='main'>
-          <h2 className='main-title'>Execution Log</h2>
+          <div className="main-heade">
+            <h2 className='main-title'>Execution Log</h2>
+          </div>
           <div className='main-content-empty'>
             <FaTerminal size={48} />
             <p>No execution logs yet. Connect to database and upload SQL files to start.</p>
           </div>
+          <div className="main-footer"></div>
         </main>
       </div>
     </>
