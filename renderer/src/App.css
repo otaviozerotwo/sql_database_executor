@@ -78,21 +78,6 @@
   cursor: not-allowed;
 }
 
-.sql-files-title {
-  font-size: 16px;
-}
-
-.sql-upload-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 2rem;
-  border: 2px dashed rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  text-align: center;
-}
-
 .main {
   display: flex;
   flex-direction: column;
@@ -102,23 +87,48 @@
   border-radius: 6px;
 }
 
+.sql-files {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .main-title {
-  margin: 0;
+  margin-top: 0;
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 16px;
 }
 
-.main-content-empty {
+.sql-upload-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem 6rem;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.execution-log-content-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem;
   color: rgba(255, 255, 255, 0.6);
 }
 
-.main-footer {
+.footer {
   padding: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
