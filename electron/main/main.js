@@ -15,7 +15,7 @@ const createWindow = () => {
   mainWindow.maximize();
   mainWindow.loadURL('http://localhost:5173');
 
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
 }
 
 app.whenReady().then(() => {

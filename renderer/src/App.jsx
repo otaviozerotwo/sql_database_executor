@@ -1,6 +1,6 @@
 import './App.css';
 import { FaDatabase, FaFileUpload } from 'react-icons/fa';
-import { FaPlug, FaTerminal, FaPlay, FaStop, FaS } from 'react-icons/fa6';
+import { FaPlug, FaTerminal, FaPlay, FaStop } from 'react-icons/fa6';
 
 function App() {
   return (
@@ -22,23 +22,23 @@ function App() {
             <h2 className='form-title'>Database Connection</h2>
             <div className='form-group'>
               <label className='form-label'>Host</label>
-              <input className='form-input' type='text' placeholder='localhost' />
+              <input id='inputDbHost' className='form-input' type='text' placeholder='localhost' />
             </div>
             <div className='form-group'>
               <label className='form-label'>Port</label>
-              <input className='form-input' type='number' placeholder='5432' />
+              <input id='inputDbPort' className='form-input' type='number' placeholder='5432' />
             </div>
             <div className='form-group'>
               <label className='form-label'>Database</label>
-              <input className='form-input' type='text' placeholder='mydb' />
+              <input id='inputDbName' className='form-input' type='text' placeholder='mydb' />
             </div>
             <div className='form-group'>
               <label className='form-label'>Username</label>
-              <input className='form-input' type='text' placeholder='postgres' />
+              <input id='inputDbUser' className='form-input' type='text' placeholder='postgres' />
             </div>
             <div className='form-group'>
               <label className='form-label'>Password</label>
-              <input className='form-input' type='password' placeholder='********' />
+              <input id='inputDbPass' className='form-input' type='password' placeholder='********' />
             </div>
             <button 
               type='submit' 
