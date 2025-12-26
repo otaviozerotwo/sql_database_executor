@@ -1,7 +1,24 @@
-const dbHost = document.getElementById('inputDbHost');
-const dbPort = document.getElementById('inputDbPort');
-const dbName = document.getElementById('inputDbName');
-const dbUser = document.getElementById('inputDbUser');
-const dbPass = document.getElementById('inputDbPass');
+export async function connectToDatabase(formData) {
+  if (!window.api || !window.api.connectDatabase) {
+    throw new Error('Electron API não disponível');
+  }
 
-console.log(dbHost, dbPort, dbName, dbUser, dbPass);
+  const { host, port, database, user, password } = formData;
+
+  if (!host || !port || !database || !user || !password) {
+    return {
+      success: false,
+      message: 'Preencha todos os campos'
+    };
+  }
+
+  const result = await window.api.connectDatabase({
+    host,
+    port: Number(port),
+    database,
+    user,
+    password
+  });
+
+  return result;
+}
