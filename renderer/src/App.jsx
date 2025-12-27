@@ -1,22 +1,13 @@
 import './App.css';
-import { FaDatabase, FaFileUpload } from 'react-icons/fa';
+import { FaFileUpload } from 'react-icons/fa';
 import { FaTerminal, FaPlay, FaStop } from 'react-icons/fa6';
 import { ConnectionForm } from './components/ConnectionForm/ConnectionForm';
+import { Header } from './components/Header/Header';
 
 function App() {
   return (
     <>
-      <header className='header'>
-        <div className='header-container'>
-          <div className='header-title'>
-            <FaDatabase size={32} />
-            <h1>SQL Database Executor</h1>
-          </div>
-          <div className='conn-status'>
-            <span className='conn-status-description'>Disconnected</span> {/* TODO: incluir bullet colorido */}
-          </div>
-        </div>
-      </header>
+      <Header />
       <div className='container-grid'>
         <aside className='aside'>
           <ConnectionForm />
