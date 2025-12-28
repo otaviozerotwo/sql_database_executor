@@ -11,7 +11,7 @@ const createWindow = () => {
     height: 768,
     roundedCorners: false,
     webPreferences: {
-      preload: path.join(__dirname + '/preload.js'),
+      preload: path.join(__dirname, '/preload.js'),
       contextIsolation: true,
       nodeIntegration: false
     }
@@ -20,7 +20,7 @@ const createWindow = () => {
   mainWindow.maximize();
   mainWindow.loadURL('http://localhost:5173');
 
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
 }
 
 app.whenReady().then(() => {
@@ -74,4 +74,13 @@ ipcMain.handle('db:connect', async (_event, config) => {
       message: error.message || 'Erro ao conectar ao banco'
     };
   }
+});
+
+ipcMain.handle('db:disconnect', async () => {
+  if (pgClient) {
+    await pgClient.end();
+    pgClient = null;
+  }
+
+  return { success: true };
 });

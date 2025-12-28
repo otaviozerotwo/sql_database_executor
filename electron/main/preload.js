@@ -8,5 +8,9 @@ contextBridge.exposeInMainWorld('api', {
    */
   connectDatabase: (config) => {
     return ipcRenderer.invoke('db:connect', config);
+  },
+
+  disconnectDatabase: () => {
+    return ipcRenderer.invoke('db:disconnect');
   }
 });

@@ -22,3 +22,13 @@ export async function connectToDatabase(formData) {
 
   return result;
 }
+
+export async function disconnectToDatabase() {
+  if (!window.api || !window.api.disconnectDatabase) {
+    throw new Error('Electron API não disponível');
+  }
+
+  const result = await window.api.disconnectDatabase();
+
+  return result;
+}

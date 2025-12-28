@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { connectToDatabase } from '../../../renderer';
+import { connectToDatabase, disconnectToDatabase } from '../../../renderer';
 import './ConnectionForm.css';
 import { FaPlug } from 'react-icons/fa6';
 
@@ -12,8 +12,9 @@ export function ConnectionForm() {
     password: ''
   });
 
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState('disconnected'); // 'disconnected' | 'connecting' | 'connected' | 'disconnecting' | 'error'
   const [message, setMessage] = useState('');
+  const isConnected = status === 'connected';
 
   function handleChange(e) {
     setForm({
@@ -24,22 +25,31 @@ export function ConnectionForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (isConnected) {
+      setStatus('disconnecting');
+      await disconnectToDatabase();
+      setStatus('disconnected');
+      setForm({
+        host: '',
+        port: '',
+        database: '',
+        user: '',
+        password: ''
+      });
+      setMessage('Disconnected successfully');
+      return;
+    }
+
     setStatus('connecting');
-    setMessage('');
+    const result = await connectToDatabase(form);
 
-    try {
-      const result = await connectToDatabase(form);
-
-      if (result.success) {
-        setStatus('success');
-        setMessage(result.message || 'Conectado com sucesso');
-      } else {
-        setStatus('error');
-        setMessage(result.message || 'Erro ao conectar');
-      }
-    } catch (error) {
-      setStatus('error');
-      setMessage(error.message);
+    if (result.success) {
+      setStatus('connected');
+      setMessage('Connected successfully');
+    } else {
+      setStatus('disconnected');
+      setMessage(`Connection failed: ${result.message}`);
     }
   }
     
@@ -49,31 +59,71 @@ export function ConnectionForm() {
         <h2 className='form-title'>Database Connection</h2>
         <div className='form-group'>
           <label className='form-label'>Host</label>
-          <input name='host' className='form-input' type='text' placeholder='localhost' onChange={handleChange} />
+          <input 
+            name='host' 
+            className='form-input' 
+            type='text' 
+            placeholder='localhost' 
+            onChange={handleChange} 
+            disabled={isConnected}
+          />
         </div>
         <div className='form-group'>
           <label className='form-label'>Port</label>
-          <input name='port' id='inputDbPort' className='form-input' type='number' placeholder='1234' onChange={handleChange} />
+          <input 
+            name='port'
+            className='form-input' 
+            type='number' 
+            placeholder='1234' 
+            onChange={handleChange} 
+            disabled={isConnected}
+          />
         </div>
         <div className='form-group'>
           <label className='form-label'>Database</label>
-          <input name='database' id='inputDbName' className='form-input' type='text' placeholder='mydb' onChange={handleChange} />
+          <input 
+            name='database' 
+            className='form-input' 
+            type='text' 
+            placeholder='mydb' 
+            onChange={handleChange} 
+            disabled={isConnected}
+          />
         </div>
         <div className='form-group'>
           <label className='form-label'>Username</label>
-          <input name='user' id='inputDbUser' className='form-input' type='text' placeholder='myuser' onChange={handleChange} />
+          <input 
+            name='user' 
+            className='form-input' 
+            type='text' 
+            placeholder='myuser' 
+            onChange={handleChange} 
+            disabled={isConnected}
+          />
         </div>
         <div className='form-group'>
           <label className='form-label'>Password</label>
-          <input name='password' id='inputDbPass' className='form-input' type='password' placeholder='********' onChange={handleChange} />
+          <input 
+            name='password' 
+            className='form-input' 
+            type='password' 
+            placeholder='********' 
+            onChange={handleChange} 
+            disabled={isConnected}
+          />
         </div>
         <button 
           type='submit' 
           className='btn-submit'
-          disabled={status === 'connecting'}
         >
           <FaPlug size={16} />
-          {status === 'connecting' ? 'Connecting...' : 'Connect'}
+          {status === 'connecting' 
+            ? 'Connecting...' 
+            : status === 'disconnecting'
+            ? 'Disconnecting...'
+            : isConnected
+            ? 'Disconnect'
+            : 'Connect'}
         </button>
       </form>
 
