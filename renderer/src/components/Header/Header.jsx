@@ -1,7 +1,7 @@
 import './Header.css';
 import { FaDatabase } from 'react-icons/fa';
 
-export function Header() {
+export function Header({ message }) {
   return (
     <header className='header'>
       <div className='header-container'>
@@ -10,7 +10,7 @@ export function Header() {
           <h1>SQL Database Executor</h1>
         </div>
         <div className='conn-status'>
-          <span className='conn-status-description'>Disconnected</span> {/* TODO: incluir bullet colorido */}
+          <span className='conn-status-description'>{message}</span> {/* TODO: incluir bullet colorido */}
         </div>
       </div>
     </header>

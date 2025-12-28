@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { connectToDatabase, disconnectToDatabase } from '../../../renderer';
 import './ConnectionForm.css';
 import { FaPlug } from 'react-icons/fa6';
 
-export function ConnectionForm() {
+export function ConnectionForm({
+  isConnected,
+  status,
+  onConnect,
+  onDisconnect
+}) {
   const [form, setForm] = useState({
     host: '',
     port: '',
@@ -11,10 +15,6 @@ export function ConnectionForm() {
     user: '',
     password: ''
   });
-
-  const [status, setStatus] = useState('disconnected'); // 'disconnected' | 'connecting' | 'connected' | 'disconnecting' | 'error'
-  const [message, setMessage] = useState('');
-  const isConnected = status === 'connected';
 
   function handleChange(e) {
     setForm({
@@ -27,30 +27,11 @@ export function ConnectionForm() {
     e.preventDefault();
 
     if (isConnected) {
-      setStatus('disconnecting');
-      await disconnectToDatabase();
-      setStatus('disconnected');
-      setForm({
-        host: '',
-        port: '',
-        database: '',
-        user: '',
-        password: ''
-      });
-      setMessage('Disconnected successfully');
+      await onDisconnect();
       return;
     }
 
-    setStatus('connecting');
-    const result = await connectToDatabase(form);
-
-    if (result.success) {
-      setStatus('connected');
-      setMessage('Connected successfully');
-    } else {
-      setStatus('disconnected');
-      setMessage(`Connection failed: ${result.message}`);
-    }
+    await onConnect(form);
   }
     
   return (
@@ -126,8 +107,6 @@ export function ConnectionForm() {
             : 'Connect'}
         </button>
       </form>
-
-      {message && <p style={{ textAlign: 'center' }}>{message}</p>} {/* TODO: trocar para alert component */}
     </>
   );
 }

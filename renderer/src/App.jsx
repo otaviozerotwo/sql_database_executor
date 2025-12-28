@@ -3,14 +3,22 @@ import { FaFileUpload } from 'react-icons/fa';
 import { FaTerminal, FaPlay, FaStop } from 'react-icons/fa6';
 import { ConnectionForm } from './components/ConnectionForm/ConnectionForm';
 import { Header } from './components/Header/Header';
+import { useDatabaseConnection } from './hooks/useDatabaseConnection';
 
 function App() {
+  const db = useDatabaseConnection();
+
   return (
     <>
-      <Header />
+      <Header message={db.message} />
       <div className='container-grid'>
         <aside className='aside'>
-          <ConnectionForm />
+          <ConnectionForm 
+            isConnected={db.isConnected}
+            status={db.status}
+            onConnect={db.connect}
+            onDisconnect={db.disconnect}
+          />
         </aside>
         <main className='main'>
           <div className="sql-files">
