@@ -1,0 +1,26 @@
+.sql-files {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
+.btn-submit, .btn-disabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-disabled {
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}

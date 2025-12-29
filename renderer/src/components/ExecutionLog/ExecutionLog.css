@@ -1,0 +1,21 @@
+.execution-log {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.execution-log-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.execution-log-content-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
