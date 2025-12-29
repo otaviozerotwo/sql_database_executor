@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <Header message={db.message} />
+      <Header status={db.status} message={db.message} />
       <div className='container-grid'>
         <aside className='aside'>
           <ConnectionForm 

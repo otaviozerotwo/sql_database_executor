@@ -21,6 +21,27 @@
   }
 }
 
+.conn-status-bullet {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+    
+.conn-status-color-indicator-connected {
+  background-color: green;
+}
+  
+.conn-status-color-indicator-connecting,
+.conn-status-color-indicator-disconnecting {
+  background-color: orange;
+}
+
+.conn-status-color-indicator-disconnected {
+  background-color: red;
+}
+
 .conn-status-description {
-  font-size: 14px;;
+  font-size: 14px;
 }

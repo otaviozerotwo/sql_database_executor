@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ConnectionForm.css';
-import { FaPlug } from 'react-icons/fa6';
+import { FaPlug, FaPlugCircleXmark } from 'react-icons/fa6';
 
 export function ConnectionForm({
   isConnected,
@@ -15,6 +15,19 @@ export function ConnectionForm({
     user: '',
     password: ''
   });
+
+  useEffect(() => {
+    if (status === 'disconnected') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setForm({
+        host: '',
+        port: '',
+        database: '',
+        user: '',
+        password: '' 
+      });
+    }
+  }, [status]);
 
   function handleChange(e) {
     setForm({
@@ -42,6 +55,7 @@ export function ConnectionForm({
           <label className='form-label'>Host</label>
           <input 
             name='host' 
+            value={form.host}
             className='form-input' 
             type='text' 
             placeholder='localhost' 
@@ -53,6 +67,7 @@ export function ConnectionForm({
           <label className='form-label'>Port</label>
           <input 
             name='port'
+            value={form.port}
             className='form-input' 
             type='number' 
             placeholder='1234' 
@@ -64,6 +79,7 @@ export function ConnectionForm({
           <label className='form-label'>Database</label>
           <input 
             name='database' 
+            value={form.database}
             className='form-input' 
             type='text' 
             placeholder='mydb' 
@@ -75,6 +91,7 @@ export function ConnectionForm({
           <label className='form-label'>Username</label>
           <input 
             name='user' 
+            value={form.user}
             className='form-input' 
             type='text' 
             placeholder='myuser' 
@@ -86,6 +103,7 @@ export function ConnectionForm({
           <label className='form-label'>Password</label>
           <input 
             name='password' 
+            value={form.password}
             className='form-input' 
             type='password' 
             placeholder='********' 
@@ -97,7 +115,7 @@ export function ConnectionForm({
           type='submit' 
           className='btn-submit'
         >
-          <FaPlug size={16} />
+          {status === 'connected' ? <FaPlugCircleXmark size={16} /> : <FaPlug size={16} />}
           {status === 'connecting' 
             ? 'Connecting...' 
             : status === 'disconnecting'
