@@ -20,7 +20,7 @@ export function useDatabaseConnection() {
       return true;
     }
 
-    setStatus('disconnected');
+    setStatus('error');
     setMessage(`Connection failed: ${result.message}`);
     return false;
   }
