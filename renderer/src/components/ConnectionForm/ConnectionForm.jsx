@@ -113,7 +113,7 @@ export function ConnectionForm({
         </div>
         <button 
           type='submit' 
-          className='btn-submit'
+          className='form-btn'
         >
           {status === 'connected' ? <FaPlugCircleXmark size={16} /> : <FaPlug size={16} />}
           {status === 'connecting' 
