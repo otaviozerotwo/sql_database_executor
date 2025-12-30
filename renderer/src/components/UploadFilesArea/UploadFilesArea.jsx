@@ -1,4 +1,4 @@
-import { FaFileUpload } from 'react-icons/fa';
+import { FaFileUpload, FaArrowDown } from 'react-icons/fa';
 import { FaPlay, FaStop } from 'react-icons/fa6';
 import './UploadFilesArea.css';
 
@@ -28,6 +28,11 @@ export function UploadFilesArea() {
           <FaStop />
           Stop Execution
         </button>
+      </div>
+      <div className="sql-files-count">
+        <span className='sql-files-count-title'>Pending Files</span>
+        <span className='sql-files-count-number'>0</span>
+        <FaArrowDown />
       </div>
     </div>
   );
