@@ -32,3 +32,13 @@ export async function disconnectToDatabase() {
 
   return result;
 }
+
+export async function selectSqlFiles() {
+  if (!window.api || !window.api.disconnectDatabase) {
+    throw new Error('Electron API não disponível');
+  }
+  
+  const result = await window.api.selectSqlFiles();
+
+  return result;
+}

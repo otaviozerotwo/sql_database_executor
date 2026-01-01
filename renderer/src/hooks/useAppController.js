@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { connectToDatabase, disconnectToDatabase } from '../renderer';
+import { connectToDatabase, disconnectToDatabase, selectSqlFiles } from '../renderer';
 
 export function useAppController() {
   const [dbStatus, setDbStatus] = useState('disconnected');
@@ -43,7 +43,7 @@ export function useAppController() {
   }
 
   async function uploadFiles() {
-    const selectedFiles = await window.api.selectSqlFiles();
+    const selectedFiles = await selectSqlFiles();
 
     if (!selectedFiles || selectedFiles.length === 0) {
       return;
