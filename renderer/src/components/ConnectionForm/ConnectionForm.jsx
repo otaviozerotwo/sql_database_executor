@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import './ConnectionForm.css';
 import { FaPlug, FaPlugCircleXmark } from 'react-icons/fa6';
+import './ConnectionForm.css';
 
 export function ConnectionForm({
   isConnected,
-  status,
+  dbStatus,
   onConnect,
   onDisconnect
 }) {
@@ -17,7 +17,7 @@ export function ConnectionForm({
   });
 
   useEffect(() => {
-    if (status === 'disconnected') {
+    if (dbStatus === 'disconnected') {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({
         host: '',
@@ -27,7 +27,7 @@ export function ConnectionForm({
         password: '' 
       });
     }
-  }, [status]);
+  }, [dbStatus]);
 
   function handleChange(e) {
     setForm({
@@ -115,10 +115,10 @@ export function ConnectionForm({
           type='submit' 
           className='form-btn'
         >
-          {status === 'connected' ? <FaPlugCircleXmark size={16} /> : <FaPlug size={16} />}
-          {status === 'connecting' 
+          {dbStatus === 'connected' ? <FaPlugCircleXmark size={16} /> : <FaPlug size={16} />}
+          {dbStatus === 'connecting' 
             ? 'Connecting...' 
-            : status === 'disconnecting'
+            : dbStatus === 'disconnecting'
             ? 'Disconnecting...'
             : isConnected
             ? 'Disconnect'

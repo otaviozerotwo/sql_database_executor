@@ -1,27 +1,35 @@
 import { ConnectionForm } from './components/ConnectionForm/ConnectionForm';
 import { Header } from './components/Header/Header';
-import { useDatabaseConnection } from './hooks/useDatabaseConnection';
+import { useAppController } from './hooks/useAppController';
 import { UploadFilesArea } from './components/UploadFilesArea/UploadFilesArea';
 import { ExecutionLog } from './components/ExecutionLog/ExecutionLog';
 import './App.css';
 
 function App() {
-  const db = useDatabaseConnection();
+  const appController = useAppController();
 
   return (
     <>
-      <Header status={db.status} message={db.message} />
+      <Header dbStatus={appController.dbStatus} message={appController.message} />
       <div className='container-grid'>
         <aside className='aside'>
           <ConnectionForm 
-            isConnected={db.isConnected}
-            status={db.status}
-            onConnect={db.connect}
-            onDisconnect={db.disconnect}
+            isConnected={appController.isConnected}
+            dbStatus={appController.dbStatus}
+            onConnect={appController.connect}
+            onDisconnect={appController.disconnect}
           />
         </aside>
         <main className='main'>
-          <UploadFilesArea />
+          <UploadFilesArea
+            onUpload={appController.uploadFiles}
+            onExecute={appController.executeFiles}
+            onStop={appController.stopExecution}
+            canUpload={appController.canUpload}
+            canExecute={appController.canExecute}
+            canStop={appController.canStop}
+            files={appController.files}
+          />
           <ExecutionLog />
         </main>
       </div>

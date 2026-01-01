@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const { registerDbIpc } = require('./ipc/db.ipc');
+const { registerFilesIpc } = require('./ipc/files.ipc');
 
 let mainWindow = null;
 
@@ -26,4 +27,5 @@ app.whenReady().then(() => {
   createWindow();
 
   registerDbIpc();
+  registerFilesIpc(mainWindow);
 });

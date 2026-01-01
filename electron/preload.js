@@ -12,5 +12,9 @@ contextBridge.exposeInMainWorld('api', {
 
   disconnectDatabase: () => {
     return ipcRenderer.invoke('db:disconnect');
+  },
+
+  selectSqlFiles: () => {
+    return ipcRenderer.invoke('files:selectSql');
   }
 });
