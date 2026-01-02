@@ -1,8 +1,9 @@
 import { ConnectionForm } from './components/ConnectionForm/ConnectionForm';
 import { Header } from './components/Header/Header';
 import { useAppController } from './hooks/useAppController';
-import { UploadFilesArea } from './components/UploadFilesArea/UploadFilesArea';
+import { SqlFileActions } from './components/SqlFileActions/SqlFileActions';
 import { ExecutionLog } from './components/ExecutionLog/ExecutionLog';
+import { SqlFileList } from './components/SqlFileList/SqlFileList';
 import './App.css';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           />
         </aside>
         <main className='main'>
-          <UploadFilesArea
+          <SqlFileActions
             onUpload={appController.uploadFiles}
             onExecute={appController.executeFiles}
             onStop={appController.stopExecution}
@@ -29,6 +30,11 @@ function App() {
             canExecute={appController.canExecute}
             canStop={appController.canStop}
             files={appController.files}
+            onRemove={appController.removeFile}
+          />
+          <SqlFileList
+            files={appController.files}
+            onRemove={appController.removeFile}
           />
           <ExecutionLog />
         </main>

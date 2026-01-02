@@ -56,6 +56,10 @@ export function useAppController() {
     });
   }
 
+  function removeFile(path) {
+    setFiles(prev => prev.filter(f => f.path !== path));
+  }
+
   function startExecution() {
     setExecutionStatus('running');
   }
@@ -82,6 +86,7 @@ export function useAppController() {
     connect,
     disconnect,
     uploadFiles,
+    removeFile,
     startExecution,
     finishExecution,
     stopExecution

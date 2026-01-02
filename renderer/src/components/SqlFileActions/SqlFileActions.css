@@ -1,0 +1,27 @@
+.file-actions-container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.files-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  gap: 0.5rem;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+}
+
+.files-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
