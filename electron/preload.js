@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
+const { executeSqlBatch } = require('./services/sqlExecutor');
 
 contextBridge.exposeInMainWorld('api', {
   /**
@@ -16,5 +17,14 @@ contextBridge.exposeInMainWorld('api', {
 
   selectSqlFiles: () => {
     return ipcRenderer.invoke('files:selectSql');
+  },
+
+  executeSqlBatch: (files) => {
+    ipcRenderer.invoke('sql:executeBatch', files);
+  },
+
+  onSqlLog: (callback) => {
+    ipcRenderer.removeAllListeners('sql:log');
+    ipcRenderer.on('sql:log', (_event, log) => callback(log));
   }
 });

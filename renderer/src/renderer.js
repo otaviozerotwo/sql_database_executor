@@ -42,3 +42,21 @@ export async function selectSqlFiles() {
 
   return result;
 }
+
+export async function executeSqlBatch(files) {
+  if (!window.api || !window.api.executeSqlBatch) {
+    throw new Error('Electron API não disponível');
+  }
+
+  const result = await window.api.executeSqlBatch(files);
+
+  return result;
+}
+
+export function onSqlLog(callback) {
+  if (!window.api || !window.api.onSqlLog) {
+    throw new Error('Electron API não disponível');
+  }
+
+  window.api.onSqlLog(callback);
+}
