@@ -1,13 +1,14 @@
 import { FaTerminal } from 'react-icons/fa6';
 import './ExecutionLog.css';
 
-export function ExecutionLog({ logs }) {
+export function ExecutionLog({ dbStatus, logs }) {
+  
   return (
     <div className='execution-log'>
       <div className='execution-log-header'>
         <h2 className='title'>Execution Log</h2>
       </div>
-      {!logs || logs.length === 0 ? (
+      {dbStatus !== 'connected' || !logs || logs.length === 0 ? (
         <div className='execution-log-content'>
           <div className='execution-log-content-empty'>
             <FaTerminal size={48} />

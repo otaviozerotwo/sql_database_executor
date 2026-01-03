@@ -36,7 +36,10 @@ function App() {
             files={appController.files}
             onRemove={appController.removeFile}
           />
-          <ExecutionLog logs={appController.executionLogs}/>
+          <ExecutionLog 
+            dbStatus={appController.dbStatus}
+            logs={appController.executionLogs}
+          />
         </main>
       </div>
     </>
