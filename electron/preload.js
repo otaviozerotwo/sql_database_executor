@@ -19,7 +19,7 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   executeSqlBatch: (files) => {
-    ipcRenderer.invoke('sql:executeBatch', files);
+    return ipcRenderer.invoke('sql:executeBatch', files);
   },
 
   onSqlLog: (callback) => {

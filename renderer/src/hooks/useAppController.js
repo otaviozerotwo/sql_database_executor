@@ -1,11 +1,18 @@
-import { useState } from 'react';
-import { connectToDatabase, disconnectToDatabase, selectSqlFiles } from '../renderer';
+import { useEffect, useState } from 'react';
+import { 
+  connectToDatabase, 
+  disconnectToDatabase, 
+  selectSqlFiles,
+  executeSqlBatch,
+  onSqlLog 
+} from '../renderer';
 
 export function useAppController() {
   const [dbStatus, setDbStatus] = useState('disconnected');
   const [message, setMessage] = useState('Disconnected');
   const [executionStatus, setExecutionStatus] = useState('idle');
   const [files, setFiles] = useState([]);
+  const [executionLogs, setExecutionLogs] = useState([]);
   
   const isConnected = dbStatus === 'connected';
 
@@ -16,6 +23,12 @@ export function useAppController() {
     executionStatus !== 'running';
 
   const canStop = executionStatus === 'running';
+
+  useEffect(() => {
+    onSqlLog(log => {
+      setExecutionLogs(prev => [...prev, log]);
+    });
+  }, []);
 
   async function connect(form) {
     setDbStatus('connecting');
@@ -72,11 +85,34 @@ export function useAppController() {
     setExecutionStatus('idle');
   }
 
+  async function executeAll() {
+    try {
+      setExecutionStatus('running');
+      setExecutionLogs([]);
+
+      const result = await executeSqlBatch(files);
+
+      if (!result || typeof result.success !== 'boolean') {
+        setExecutionStatus('error');
+        return;
+      }
+
+      setExecutionStatus(result.success ? 'idle' : 'error');
+    } catch (error) {
+      setExecutionStatus('error');
+      setExecutionLogs(prev => [
+        ...prev,
+        { status: 'error', message: error.message }
+      ]);
+    }
+  }
+
   return {
     dbStatus,
     message,
     executionStatus,
     files,
+    executionLogs,
 
     isConnected,
     canUpload,
@@ -89,6 +125,7 @@ export function useAppController() {
     removeFile,
     startExecution,
     finishExecution,
-    stopExecution
+    stopExecution,
+    executeAll
   };
 }

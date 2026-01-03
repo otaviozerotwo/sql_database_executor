@@ -24,7 +24,7 @@ function App() {
         <main className='main'>
           <SqlFileActions
             onUpload={appController.uploadFiles}
-            onExecute={appController.executeFiles}
+            onExecute={appController.executeAll}
             onStop={appController.stopExecution}
             canUpload={appController.canUpload}
             canExecute={appController.canExecute}
@@ -36,7 +36,7 @@ function App() {
             files={appController.files}
             onRemove={appController.removeFile}
           />
-          <ExecutionLog />
+          <ExecutionLog logs={appController.executionLogs}/>
         </main>
       </div>
     </>

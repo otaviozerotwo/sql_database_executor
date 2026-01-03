@@ -39,6 +39,7 @@ export async function selectSqlFiles() {
   }
   
   const result = await window.api.selectSqlFiles();
+  console.log('FILE:', result);
 
   return result;
 }
@@ -49,6 +50,7 @@ export async function executeSqlBatch(files) {
   }
 
   const result = await window.api.executeSqlBatch(files);
+  console.log('FINAL RESULT:', result);
 
   return result;
 }
