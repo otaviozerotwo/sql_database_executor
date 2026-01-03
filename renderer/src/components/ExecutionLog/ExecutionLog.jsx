@@ -2,7 +2,6 @@ import { FaTerminal } from 'react-icons/fa6';
 import './ExecutionLog.css';
 
 export function ExecutionLog({ dbStatus, logs }) {
-  
   return (
     <div className='execution-log'>
       <div className='execution-log-header'>

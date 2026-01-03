@@ -51,6 +51,7 @@ export function useAppController() {
     await disconnectToDatabase();
 
     setDbStatus('disconnected');
+    setExecutionLogs([]);
     setMessage('Disconnected');
     setFiles([]);
   }
