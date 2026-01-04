@@ -21,7 +21,9 @@
 }
 
 .execution-log-list-container {
+  height: 18rem;
   margin: 0 1rem;
+  overflow: auto;
 }
 
 .execution-log-list {

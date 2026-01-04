@@ -27,6 +27,22 @@ export function useAppController() {
   useEffect(() => {
     onSqlLog(log => {
       setExecutionLogs(prev => [...prev, log]);
+
+      if (log.status === 'success') {
+        setFiles(prev =>
+          prev.map(file =>
+            file.path === log.filePath
+              ? { ...file, status: 'success' }
+              : file
+          )
+        );
+
+        setTimeout(() => {
+          setFiles(prev =>
+            prev.filter(file => file.path !== log.filePath)
+          );
+        }, 300);
+      }
     });
   }, []);
 

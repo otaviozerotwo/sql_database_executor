@@ -3,7 +3,8 @@ const db = require('../db/connection');
 
 /**
  * Executa uma lista de arquivos SQL de forma sequencial.
- * Interrompe a execução no primeiro erro.
+ * Não interrompe a execução em caso de erro.
+ * Cada arquivo gera um log de sucesso ou erro.
  * 
  * @param {Object} params
  * @param {Array<{ name: string, path: string }>} params.files
@@ -35,25 +36,23 @@ async function executeSqlBatch({ files = [], onLog }) {
       if (onLog) {
         onLog({
           file: name,
+          filePath: file.path,
           status: 'success',
           message: 'Script executed successfully'
         });
       }
     } catch (error) {
-      // log de erro (e interrupção)
+      // log de erro
       if (onLog) {
         onLog({
           file: name,
+          filePath: file.path,
           status: 'error',
           message: error.message || 'Erro ao executar script SQL'
         });
       }
       
-      return {
-        success: false,
-        error: error.message,
-        failedFile: name
-      };
+      continue;
     }
   }
 
