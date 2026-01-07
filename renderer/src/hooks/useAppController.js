@@ -12,7 +12,6 @@ export function useAppController() {
   const [message, setMessage] = useState('Disconnected');
   const [executionStatus, setExecutionStatus] = useState('idle');
   const [files, setFiles] = useState([]);
-  const [executionLogs, setExecutionLogs] = useState([]);
   
   const isConnected = dbStatus === 'connected';
 
@@ -26,17 +25,21 @@ export function useAppController() {
 
   useEffect(() => {
     onSqlLog(log => {
-      setExecutionLogs(prev => [...prev, log]);
+      setFiles(prev => 
+        prev.map(file =>
+          file.path === log.filePath
+            ? {
+                ...file,
+                logs: [
+                  ...(file.logs || []),
+                  { status: log.status, message: log.message }
+                ]
+              }
+            : file
+        )
+      );
 
       if (log.status === 'success') {
-        setFiles(prev =>
-          prev.map(file =>
-            file.path === log.filePath
-              ? { ...file, status: 'success' }
-              : file
-          )
-        );
-
         setTimeout(() => {
           setFiles(prev =>
             prev.filter(file => file.path !== log.filePath)
@@ -67,7 +70,6 @@ export function useAppController() {
     await disconnectToDatabase();
 
     setDbStatus('disconnected');
-    setExecutionLogs([]);
     setMessage('Disconnected');
     setFiles([]);
   }
@@ -103,24 +105,13 @@ export function useAppController() {
   }
 
   async function executeAll() {
+    setExecutionStatus('running');
+    
     try {
-      setExecutionStatus('running');
-      setExecutionLogs([]);
+      await executeSqlBatch(files);
 
-      const result = await executeSqlBatch(files);
-
-      if (!result || typeof result.success !== 'boolean') {
-        setExecutionStatus('error');
-        return;
-      }
-
-      setExecutionStatus(result.success ? 'idle' : 'error');
-    } catch (error) {
-      setExecutionStatus('error');
-      setExecutionLogs(prev => [
-        ...prev,
-        { status: 'error', message: error.message }
-      ]);
+    } finally {
+      setExecutionStatus('idle');
     }
   }
 
@@ -129,7 +120,6 @@ export function useAppController() {
     message,
     executionStatus,
     files,
-    executionLogs,
 
     isConnected,
     canUpload,

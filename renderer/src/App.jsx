@@ -38,7 +38,7 @@ function App() {
           />
           <ExecutionLog 
             dbStatus={appController.dbStatus}
-            logs={appController.executionLogs}
+            logs={appController.files}
           />
         </main>
       </div>
