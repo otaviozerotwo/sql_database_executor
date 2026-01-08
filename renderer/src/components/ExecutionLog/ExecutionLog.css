@@ -40,10 +40,14 @@
   gap: 4px;
 }
 
-.execution-log-item.success {
+.execution-log-message {
+  font-size: 0.9rem;
+}
+
+.execution-log-message.success {
   color: #2E7D32;
 }
 
-.execution-log-item.error {
+.execution-log-message.error {
   color: #C62828;
 }
